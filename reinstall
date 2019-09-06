@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+Dir.glob("./*.gem").each { |path| `rm #{path}` }
+puts `gem uninstall -x cloud_storage_interface`
+puts `gem build cloud_storage_interface.gemspec`
+Dir.glob("./*.gem").each { |path| puts `gem install -f #{path}` }

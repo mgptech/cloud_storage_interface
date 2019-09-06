@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require 'cloud_storage_interface'
+class CloudStorageInterface::CLI < Thor
+  desc "test", "run tests"
+  def test
+    puts "No tests have been written"
+    exit
+  end
+end
+CloudStorageInterface::CLI.start ARGV
