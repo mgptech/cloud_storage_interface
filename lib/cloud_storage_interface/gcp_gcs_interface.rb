@@ -50,7 +50,12 @@ class CloudStorageInterface::GcpGcsInterface
     # If needed in the future, may use this for reference:
     # https://cloud.google.com/storage/docs/xml-api/post-object#usage_and_examples
     def presigned_post(bucket_name:, key:, **opts)
-      raise "presigned post unimplemented in #{self.class.name}"
+      post_obj = gcp_client.bucket(bucket_name).post_object(key)
+      
+      return {
+        fields: post_obj.fields,
+        url:    post_obj.url
+      }
     end
 
 end
