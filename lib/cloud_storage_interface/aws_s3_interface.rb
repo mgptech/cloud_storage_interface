@@ -26,7 +26,7 @@ class CloudStorageInterface::AwsS3Interface
       )
     })
 
-    s3_region = ENV['AWS_REGION']
+    s3_region = ENV['AWS_REGION'] || 'us-east-1'
     @s3_client = Aws::S3::Client.new(region: s3_region)
 
     @s3_resource = Aws::S3::Resource.new(
