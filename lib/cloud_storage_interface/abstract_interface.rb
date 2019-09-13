@@ -24,8 +24,7 @@ class CloudStorageInterface::AbstractInterface
   #     - multipart_threshold  
   # RETURNS:
   #   { checksum: <string> }
-  def upload_file(bucket_name:, key:, file:, **opts)
-  end
+  def upload_file(bucket_name:, key:, file:, **opts); end
 
   # REQUIRED TO OVERRIDE
   # =====================
@@ -33,20 +32,17 @@ class CloudStorageInterface::AbstractInterface
   #   expires_in is given in seconds and cannot be more than 1 week
   #   (due to S3 limitations)
   # RETURNS <string>
-  def presigned_url(bucket_name:, key:, expires_in:)
-  end
+  def presigned_url(bucket_name:, key:, expires_in:); end
 
   # REQUIRED TO OVERRIDE
   # =====================
   # RETURNS nil
-  def delete_file!(bucket_name:, key:)
-  end
+  def delete_file!(bucket_name:, key:); end
 
   # REQUIRED TO OVERRIDE
   # =====================
   # RETURNS <bool>
-  def file_exists?(bucket_name:, key:)
-  end
+  def file_exists?(bucket_name:, key:); end
 
   # REQUIRED TO OVERRIDE
   # =====================
@@ -56,15 +52,13 @@ class CloudStorageInterface::AbstractInterface
   # RETURNS:
   #   List of <object>s
   #   where <object> = { key: <string> }
-  def list_objects(bucket_name:, **opts)
-  end
+  def list_objects(bucket_name:, **opts); end
 
   # REQUIRED TO OVERRIDE
   # =====================
   # RETURNS <string>
-  # NOTE this is a static URL, and will only work if the bucket/obj is public
-  def build_url(bucket_name:, key:)
-  end
+  # NOTE this is an unsigned static URL, and will only work if the bucket/obj is public
+  def public_url(bucket_name:, key:); end
 
   # REQUIRED TO OVERRIDE
   # =====================
@@ -74,7 +68,6 @@ class CloudStorageInterface::AbstractInterface
   #     - acl
   # RETURNS:
   #   { fields: <object>, url: <string> }
-  def presigned_post(bucket_name:, key:, **opts)
-  end
+  def presigned_post(bucket_name:, key:, **opts); end
 
 end

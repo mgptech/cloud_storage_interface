@@ -40,9 +40,9 @@ class CloudStorageInterface::GcpGcsInterface
       end
     end
 
-    # this is a static url
+    # this is an unsigned static url
     # It will only work for objects that have public read permission
-    def build_url(bucket_name:, key:)
+    def public_url(bucket_name:, key:)
       "https://storage.googleapis.com/#{bucket_name}/#{key}"
     end
 

@@ -70,7 +70,9 @@ class CloudStorageInterface::AwsS3Interface
     end
   end
 
-  def build_url(bucket_name:, key:)
+  # this is a static url
+  # It will only work for objects that have public read permission
+  def public_url(bucket_name:, key:)
     "https://#{bucket_name}.s3.amazonaws.com/#{key}"
   end
 
