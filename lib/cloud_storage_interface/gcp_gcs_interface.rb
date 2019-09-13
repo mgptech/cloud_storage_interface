@@ -46,11 +46,10 @@ class CloudStorageInterface::GcpGcsInterface
       "https://storage.googleapis.com/#{bucket_name}/#{key}"
     end
 
-    # We have no reason to do this right now.
-    # If needed in the future, may use this for reference:
     # https://cloud.google.com/storage/docs/xml-api/post-object#usage_and_examples
+    # https://www.rubydoc.info/gems/google-cloud-storage/1.0.1/Google/Cloud/Storage/Bucket:post_object
     def presigned_post(bucket_name:, key:, **opts)
-      post_obj = gcs_client.bucket(bucket_name).post_object(key)
+      post_obj = gcs_client.bucket(bucket_name).post_object(key, policy: opts)
 
       return {
         fields: post_obj.fields,
