@@ -70,7 +70,7 @@ class CloudStorageInterface::AwsS3Interface
     end
   end
 
-  # this is a static url
+  # this is an unsigned static url
   # It will only work for objects that have public read permission
   def public_url(bucket_name:, key:)
     "https://#{bucket_name}.s3.amazonaws.com/#{key}"

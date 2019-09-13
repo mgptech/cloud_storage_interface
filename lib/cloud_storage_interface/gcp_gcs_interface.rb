@@ -3,6 +3,8 @@
 require "google/cloud/storage"
 
 class CloudStorageInterface::GcpGcsInterface
+
+    class Error < StandardError; end
     
     PROJECT_ID = ENV.fetch("GCP_PROJECT_ID",'gcp-us-central1-prod')
     
@@ -25,13 +27,18 @@ class CloudStorageInterface::GcpGcsInterface
     end
 
     def delete_file!(bucket_name:, key:)
-      gcs_client.bucket(bucket_name).file(key).delete
+      file = gcs_client.bucket(bucket_name).file(key)
+      unless file
+        raise Error.new(
+          "object #{key} in bucket #{bucket_name} doesn't exist. Can't delete"
+        )
+      end
+      file.delete
       nil
     end
 
     def file_exists?(bucket_name:, key:)
-      file = gcs_client.bucket(bucket_name).file key
-      file&.exists?
+      !!gcs_client.bucket(bucket_name).file(key)
     end
 
     def list_objects(bucket_name:, **opts)
