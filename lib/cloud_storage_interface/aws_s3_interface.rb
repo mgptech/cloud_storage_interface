@@ -44,6 +44,11 @@ class CloudStorageInterface::AwsS3Interface
     }
   end
 
+  # returns true or false
+  def download_file(bucket_name:, key:, local_path:)
+    s3_resource.bucket(bucket).object(key).download_file(local_path)
+  end
+
   # Note, expires_in cannot be more than 1 week due to S3 restrictions
   def presigned_url(bucket_name:, key:, expires_in:)
     signer = Aws::S3::Presigner.new(client: @s3_client)

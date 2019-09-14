@@ -21,7 +21,7 @@ class CloudStorageInterface::AbstractInterface
   # =====================
   # PARAMS:
   #   opts can contain:
-  #     - multipart_threshold  
+  #     - multipart_threshold
   # RETURNS:
   #   { checksum: <string> }
   def upload_file(bucket_name:, key:, file:, **opts); end
@@ -33,6 +33,14 @@ class CloudStorageInterface::AbstractInterface
   #   (due to S3 limitations)
   # RETURNS <string>
   def presigned_url(bucket_name:, key:, expires_in:); end
+
+  # REQUIRED TO OVERRIDE
+  # =====================
+  # PARAMS
+  #   bucket_name, key and local path to download
+  # RETURNS `File` object
+  def download_file(bucket_name:, key:, local_path:)
+  end
 
   # REQUIRED TO OVERRIDE
   # =====================

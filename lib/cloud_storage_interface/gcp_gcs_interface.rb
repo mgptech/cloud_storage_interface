@@ -14,12 +14,17 @@ class CloudStorageInterface::GcpGcsInterface
       @gcs_client = Google::Cloud::Storage.new project: PROJECT_ID
     end
 
-    # NOTE: we don't support upload_opts (multipart_threshold) for GCS.    
+    # NOTE: we don't support upload_opts (multipart_threshold) for GCS.
     # we also don't return the checksum here.
     def upload_file(bucket_name:, key:, file:, **opts)
       bucket = gcs_client.bucket bucket_name
       bucket.create_file file.path, key
       return {}
+    end
+
+    def download_file(bucket_name:, key:, local_path:)
+      gcs_client.bucket(bucket_name).file(key).download(local_path)
+      File.exists?(local_path)
     end
 
     def presigned_url(bucket_name:, key:, expires_in:)
