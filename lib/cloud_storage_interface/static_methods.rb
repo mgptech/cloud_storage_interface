@@ -7,9 +7,9 @@ module CloudStorageInterface::StaticMethods
   # Static helper method
   # Can be used to generate a tempfile given some text
   # This tempfile can then be passed to #upload_file
-  def with_tempfile(text, &blk)
+  def with_tempfile(text=nil, &blk)
     t = Tempfile.new
-    t.write text
+    t.write(text) if text
     t.close
     blk_result = blk.call(t)
     t.close
