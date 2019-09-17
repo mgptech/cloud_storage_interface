@@ -62,6 +62,7 @@ class CloudStorageInterface::GcpGcsInterface
       policy = {
         expiration: expiration,
         conditions: [
+          ["starts-with", "$key", "" ],
           { acl: acl },
           { success_action_status: success_action_status }
         ]
@@ -70,7 +71,7 @@ class CloudStorageInterface::GcpGcsInterface
       post_obj = get_bucket!(bucket_name).post_object(key, policy: policy)
 
       url_obj = { host: URI.parse(post_obj.url).host }
-      
+
       return { fields: post_obj.fields, url: url_obj }
     end
 
