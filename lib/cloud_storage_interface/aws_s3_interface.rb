@@ -88,7 +88,7 @@ class CloudStorageInterface::AwsS3Interface
 
     {
       fields: response.fields,
-      url:    response.url
+      url:    URI.parse(response.url).host
     }
   end
 
