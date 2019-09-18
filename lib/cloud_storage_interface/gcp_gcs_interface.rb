@@ -63,6 +63,7 @@ class CloudStorageInterface::GcpGcsInterface
         expiration: expiration,
         conditions: [
           ["starts-with", "$key", "" ],
+          ["starts-with", "$Content-Type", "" ],
           { acl: acl },
           { success_action_status: success_action_status }
         ]
