@@ -71,10 +71,16 @@ class CloudStorageInterface::GcpGcsInterface
 
       post_obj = get_bucket!(bucket_name).post_object(key, policy: policy)
 
+      # There's really no reason we need to do this ... TODO remove?
       url_obj = { host: URI.parse(post_obj.url).host }
-      additional_fields = {acl: acl, success_action_status: success_action_status}
 
-      return { fields: post_obj.fields.merge(additional_fields), url: url_obj }
+      # Have to manually merge in these fields
+      fields = post_obj.fields.merge(
+        acl: acl,
+        success_action_status: success_action_status
+      )
+
+      return { fields: fields, url: url_obj }
     end
 
     private
