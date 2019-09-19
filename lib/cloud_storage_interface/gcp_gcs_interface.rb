@@ -71,13 +71,19 @@ class CloudStorageInterface::GcpGcsInterface
 
       post_obj = get_bucket!(bucket_name).post_object(key, policy: policy)
 
-      # There's really no reason we need to do this ... TODO remove?
+      # We might want to remove this transformation from here, S3 adapter,
+      # and the browser - it's not necessary.
       url_obj = { host: URI.parse(post_obj.url).host }
+
+      # Wierd inconsistency between S3 and GCS APIs.
+      # GCS escapes ${filename} in the key before returning it in the fields.
+      # We need to manually unescape it.
+      post_obj.fields[:key] = URI.unescape(post_obj.fields[:key])
 
       # Have to manually merge in these fields
       fields = post_obj.fields.merge(
         acl: acl,
-        success_action_status: success_action_status
+        success_action_status: success_action_status,
       )
 
       return { fields: fields, url: url_obj }
