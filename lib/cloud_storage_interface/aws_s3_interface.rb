@@ -22,7 +22,7 @@ class CloudStorageInterface::AwsS3Interface
 
     Aws.config.update({
        credentials: Aws::Credentials.new(
-        Settings.aws_access_key_id, Settings.aws_secret_access_key
+        aws_access_key_id, aws_secret_access_key
       )
     })
 
@@ -84,7 +84,7 @@ class CloudStorageInterface::AwsS3Interface
   def presigned_post(bucket_name:, key:, **opts)
     response = s3_resource.
       bucket(bucket_name).
-      presigned_post(key: key,content_type_starts_with: '', **opts)
+      presigned_post(key: key, content_type_starts_with: '', **opts)
 
     {
       fields: response.fields,
