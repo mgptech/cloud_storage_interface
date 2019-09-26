@@ -7,7 +7,7 @@ class CloudStorageInterface::AwsS3Interface
   # Little confusing, the aws sdk v2 uses two different APIs
   attr_reader :s3_client, :s3_resource
 
-  def initialize(opts: {})
+  def initialize(**opts)
     aws_access_key_id = (
       opts[:aws_access_key_id] ||
       ENV['AWS_ACCESS_KEY_ID'] ||
@@ -71,7 +71,10 @@ class CloudStorageInterface::AwsS3Interface
   def list_objects(bucket_name:, **opts)
     response_objects = s3_client.list_objects(bucket: bucket_name, **opts)
     formatted_objects = response_objects.contents.map do |obj|
-      { key: obj.key }
+      {
+        key: obj.key,
+        last_modified: obj.last_modified,
+      }
     end
   end
 

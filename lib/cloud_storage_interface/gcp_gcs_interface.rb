@@ -11,7 +11,7 @@ class CloudStorageInterface::GcpGcsInterface
     
     attr_reader :gcs_client
 
-    def initialize(opts: {})
+    def initialize(**opts)
       @gcs_client = Google::Cloud::Storage.new project: PROJECT_ID
     end
 
@@ -45,7 +45,12 @@ class CloudStorageInterface::GcpGcsInterface
     end
 
     def list_objects(bucket_name:, **opts)
-      get_bucket!(bucket_name, **opts).files.map { |f| { key: f.name } }
+      get_bucket!(bucket_name, **opts).files.map do |f|
+        {
+          key: f.name,
+          last_modified: f.updated_at
+        }
+      end
     end
 
     # this is an unsigned static url
