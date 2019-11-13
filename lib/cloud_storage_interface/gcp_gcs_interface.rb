@@ -6,9 +6,9 @@ class CloudStorageInterface::GcpGcsInterface
 
     class BucketNotFoundError < StandardError; end
     class ObjectNotFoundError < StandardError; end
-    
+
     PROJECT_ID = ENV.fetch("GCP_PROJECT_ID",'gcp-us-central1-prod')
-    
+
     attr_reader :gcs_client
 
     def initialize(**opts)
@@ -48,6 +48,7 @@ class CloudStorageInterface::GcpGcsInterface
       get_bucket!(bucket_name, **opts).files.map do |f|
         {
           key: f.name,
+          content_type: obj.content_type,
           last_modified: f.updated_at
         }
       end
@@ -92,6 +93,16 @@ class CloudStorageInterface::GcpGcsInterface
       )
 
       return { fields: fields, url: url_obj }
+    end
+
+    # Return file resource details. At the moment, we're including etag and content
+    # type from GCS file object
+    # REFER: https://googleapis.dev/ruby/google-cloud-storage/latest/Google/Cloud/Storage/File.html
+    def object_details(bucket_name:, key:)
+      file = get_object!(bucket_name, key)
+      [:etag, :content_type].each_with_object({}) do |file_method, memo|
+        memo[file_method] = file.send file_method
+      end
     end
 
     private
