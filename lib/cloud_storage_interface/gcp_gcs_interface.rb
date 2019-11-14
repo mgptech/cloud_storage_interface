@@ -19,6 +19,10 @@ class CloudStorageInterface::GcpGcsInterface
     # we also don't return the checksum here.
     # NOTE: This will overwrite the file if the key already exists
     def upload_file(bucket_name:, key:, file:, **opts)
+      if opts[:acl] && opts[:acl]&.to_s == 'public-read'
+        opts[:acl] = :public_read
+      end
+
       result = get_bucket!(bucket_name).create_file file.path, key, **opts
       return {
         checksum: result.crc32c
