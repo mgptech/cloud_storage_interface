@@ -122,7 +122,6 @@ end
 ## Public methods
 List of public methods can be found [here](https://github.com/edcast/cloud_storage_interface/blob/master/lib/cloud_storage_interface/abstract_interface.rb)
 
-- initialize
 - upload_file
 - presigned_url
 - download_file
