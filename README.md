@@ -97,9 +97,9 @@ And in secrets/configmap
 ```yml
 GOOGLE_APPLICATION_CREDENTIALS=/var/secrets/google/google-sa.json
 ```
- 
+
  MAke sure service account has permissions to access GCS.
- 
+
  ### Ruby on Rails App Use
 
 ```ruby
@@ -138,4 +138,3 @@ Implementation details can be found linked github page.
 Support more public methods as when new need arise. If you plan to support Azure, Digital Ocean or any other cloud platform which not supported by this gem, can be extended very easily.
 
 Define all public methods in separate interface just like it is done for aws s3 and gcp gcs.
-
