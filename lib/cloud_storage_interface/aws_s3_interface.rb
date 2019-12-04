@@ -68,14 +68,19 @@ class CloudStorageInterface::AwsS3Interface
     s3_resource.bucket(bucket_name).object(key).exists?
   end
 
-  def list_objects(bucket_name:, **opts)
+  # This is performing n+1 network calls. We need content type of the s3 object in LXP
+  # A feature change required on LXP end to remove this call.
+  def list_objects(bucket_name:, fetch_object_content_type: false, **opts)
     response_objects = s3_client.list_objects(bucket: bucket_name, **opts)
     formatted_objects = response_objects.contents.map do |obj|
-      {
+      metadata = {
         key: obj.key,
-        content_type: obj.content_type,
         last_modified: obj.last_modified,
       }
+      if fetch_object_content_type
+        metadata.merge!(object_details(bucket_name: bucket_name, key: obj.key))
+      end
+      metadata
     end
   end
 
