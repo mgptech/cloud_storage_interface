@@ -1,6 +1,6 @@
 # Cloud Storage Interface
 
-The concept behind this gem was to support multiple cloud storgae options to upload images,csv's or pdsf. At Edcast, we have several micro-service which uses there own version of aws s3 gems to upload files. Going forward, with minimum change, rails app can upload, download, list objects from bucket that is hosted on either of cloud options. We don't have plan to add support for other cloud storgage but it would be fairly straight forward. At the moment, This gem supports
+The concept behind this gem was to support multiple cloud storgae options to upload images,csv's or pdsf. At Myglamm, we have several micro-service which uses there own version of aws s3 gems to upload files. Going forward, with minimum change, rails app can upload, download, list objects from bucket that is hosted on either of cloud options. We don't have plan to add support for other cloud storgage but it would be fairly straight forward. At the moment, This gem supports
 
   - AWS S3
   - GCP GCS
